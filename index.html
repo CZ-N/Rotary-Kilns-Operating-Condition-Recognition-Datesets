@@ -1,0 +1,304 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Rotary Kiln Multi-modal Dataset</title>
+
+  <meta name="description" content="数据集下载与简介页面（DCS + 图像）" />
+
+  <style>
+    :root{
+      --card-bg: rgba(255,255,255,0.10);
+      --card-border: rgba(255,255,255,0.18);
+      --text: rgba(255,255,255,0.92);
+      --muted: rgba(255,255,255,0.72);
+      --shadow: 0 18px 60px rgba(0,0,0,0.35);
+      --radius: 18px;
+    }
+
+    *{ box-sizing: border-box; }
+    body{
+      margin: 0;
+      font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue",
+                   Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji";
+      color: var(--text);
+      min-height: 100vh;
+      overflow-x: hidden;
+
+      /* 背景图（替换成你的图片路径） */
+      background: url("assets/bg.jpg") center/cover no-repeat fixed;
+    }
+
+    /* 背景暗色遮罩，增强文字可读性 */
+    body::before{
+      content:"";
+      position: fixed;
+      inset: 0;
+      background: radial-gradient(1200px 800px at 20% 10%, rgba(0,0,0,0.35), transparent 60%),
+                  linear-gradient(to bottom, rgba(0,0,0,0.55), rgba(0,0,0,0.75));
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    .container{
+      max-width: 1040px;
+      margin: 0 auto;
+      padding: 48px 18px 64px;
+    }
+
+    header{
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+
+    .title-wrap h1{
+      margin: 0 0 10px 0;
+      font-size: clamp(28px, 4vw, 44px);
+      line-height: 1.12;
+      letter-spacing: 0.2px;
+    }
+
+    .subtitle{
+      margin: 0;
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.65;
+      max-width: 72ch;
+    }
+
+    .badge{
+      flex: 0 0 auto;
+      padding: 10px 12px;
+      border-radius: 999px;
+      border: 1px solid var(--card-border);
+      background: rgba(255,255,255,0.10);
+      backdrop-filter: blur(10px);
+      font-size: 12px;
+      color: var(--muted);
+      white-space: nowrap;
+    }
+
+    .grid{
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 16px;
+      margin-top: 18px;
+    }
+
+    @media (max-width: 880px){
+      header{ flex-direction: column; }
+      .grid{ grid-template-columns: 1fr; }
+    }
+
+    .card{
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(12px);
+      padding: 18px 18px 16px;
+    }
+
+    .card h2{
+      margin: 0 0 10px 0;
+      font-size: 18px;
+      letter-spacing: 0.2px;
+    }
+
+    .card p, .card li{
+      color: var(--muted);
+      line-height: 1.7;
+      font-size: 14.5px;
+    }
+
+    .btns{
+      display: grid;
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .btn{
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      width: 100%;
+      padding: 12px 14px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,0.22);
+      background: rgba(255,255,255,0.10);
+      color: var(--text);
+      font-weight: 600;
+      text-decoration: none;
+      transition: transform .08s ease, background .12s ease, border-color .12s ease;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .btn:hover{
+      transform: translateY(-1px);
+      background: rgba(255,255,255,0.14);
+      border-color: rgba(255,255,255,0.32);
+    }
+
+    .btn:active{
+      transform: translateY(0px);
+    }
+
+    .btn small{
+      display: block;
+      font-weight: 500;
+      color: rgba(255,255,255,0.72);
+    }
+
+    .row{
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 12px;
+    }
+    @media (max-width: 520px){
+      .row{ grid-template-columns: 1fr; }
+    }
+
+    .pill{
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.18);
+      background: rgba(0,0,0,0.12);
+      color: rgba(255,255,255,0.78);
+      font-size: 12px;
+    }
+
+    footer{
+      margin-top: 18px;
+      color: rgba(255,255,255,0.62);
+      font-size: 12.5px;
+      line-height: 1.6;
+      text-align: center;
+    }
+
+    .mono{
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+      font-size: 12.5px;
+    }
+
+    .note{
+      border-left: 3px solid rgba(255,255,255,0.35);
+      padding-left: 12px;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <header>
+      <div class="title-wrap">
+        <!-- 数据集名称 -->
+        <h1 id="datasetName">Rotary Kiln Multi-modal Dataset</h1>
+
+        <!-- 一句话简介 -->
+        <p class="subtitle" id="datasetTagline">
+          面向工业回转窑工况识别/预测的多模态数据集：DCS 时序数据 + 火焰图像数据，支持研究与复现。
+        </p>
+      </div>
+
+      <!-- 可选：右上角信息徽章 -->
+      <div class="badge" id="datasetMeta">
+        Version v1.0 · Updated <span id="updatedDate">2026-02-05</span>
+      </div>
+    </header>
+
+    <div class="grid">
+      <!-- 左侧：简介 -->
+      <section class="card">
+        <h2>数据集简介</h2>
+        <p id="datasetIntro">
+          本数据集包含同步采集的 DCS 工艺变量与窑内火焰图像数据，可用于工况识别、异常检测与多模态对齐/融合研究。
+          数据按照时间窗口组织，并提供基础字段说明与示例代码（如有）。
+        </p>
+
+        <div class="note">
+          <p style="margin:0;">
+            <strong>引用建议：</strong>
+            如果你用于论文/报告，请在致谢或引用中注明数据集来源（可在此处补充 BibTeX）。
+          </p>
+        </div>
+
+        <div class="row" style="margin-top:14px;">
+          <span class="pill">📦 模态：DCS + 图像</span>
+          <span class="pill">🧪 任务：识别 / 预测 / 对齐</span>
+        </div>
+
+        <div class="row">
+          <span class="pill">🕒 时间分辨率：可填写</span>
+          <span class="pill">🏷️ 标签：过烧/正常/欠烧（示例）</span>
+        </div>
+
+        <div class="row">
+          <span class="pill">📄 License：可填写</span>
+          <span class="pill">✉️ Contact：可填写</span>
+        </div>
+      </section>
+
+      <!-- 右侧：下载按钮 -->
+      <aside class="card">
+        <h2>数据下载</h2>
+        <p>点击下方按钮下载对应数据。你可以把链接改成 GitHub Release / 云盘 / Hugging Face / 服务器直链等。</p>
+
+        <div class="btns">
+          <!-- 把 href 改成你的 DCS 下载地址 -->
+          <a class="btn" id="dcsBtn" href="REPLACE_WITH_DCS_DOWNLOAD_URL" target="_blank" rel="noopener">
+            ⬇️ 下载 DCS 数据
+            <small class="mono" id="dcsHint">CSV / HDF5 / NPZ …</small>
+          </a>
+
+          <!-- 把 href 改成你的 图像 下载地址 -->
+          <a class="btn" id="imgBtn" href="REPLACE_WITH_IMAGE_DOWNLOAD_URL" target="_blank" rel="noopener">
+            🖼️ 下载 图像数据
+            <small class="mono" id="imgHint">ZIP / TAR …</small>
+          </a>
+        </div>
+
+        <div class="note">
+          <p style="margin:0;">
+            <strong>推荐做法：</strong> 大文件不要直接放 Git 仓库，建议用 <span class="mono">GitHub Releases</span> 或 <span class="mono">Hugging Face Datasets</span>，
+            然后把下载链接填到上面的两个按钮里。
+          </p>
+        </div>
+
+        <div style="margin-top:12px;">
+          <h2 style="margin-top:14px;">文件说明（可选）</h2>
+          <ul style="margin: 8px 0 0 18px; padding: 0;">
+            <li><span class="mono">dcs/</span>：DCS 时序变量（示例）</li>
+            <li><span class="mono">images/</span>：火焰帧图像或视频抽帧（示例）</li>
+            <li><span class="mono">labels.csv</span>：时间段标签与元信息（示例）</li>
+          </ul>
+        </div>
+      </aside>
+    </div>
+
+    <footer>
+      <div>© <span id="year"></span> Dataset Page. Hosted on GitHub Pages.</div>
+      <div class="mono" style="margin-top:6px;">Tip: 修改 <b>index.html</b> 里的下载链接与简介即可发布。</div>
+    </footer>
+  </div>
+
+  <script>
+    // 页脚年份自动更新
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    // 如果你希望页面上显示“最后更新日期”为今天，可取消注释下面两行：
+    // const d = new Date();
+    // document.getElementById("updatedDate").textContent = d.toISOString().slice(0,10);
+  </script>
+</body>
+</html>
